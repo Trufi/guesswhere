@@ -1,3 +1,5 @@
 # Guess Where
 
-[Demo](https://trufi.github.io/guess-where/)
+Игра, в которой надо угадать, где ты на карте.
+
+[Ссылка](https://trufi.github.io/guesswhere/)
