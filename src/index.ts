@@ -10,7 +10,9 @@ import {
     calcPoints,
     calcStatus,
     getStatusText,
+    getStatusColor,
 } from './utils';
+import { getShareHtml } from './share';
 
 const duration = 3000;
 const minZoom = 16;
@@ -97,13 +99,6 @@ $('.popup-accept').addEventListener('click', () => {
     const distance = vec2dist(guessMapPoints, realMapPoints);
     const zoom = pixelsAndMapPointDistanceToZoom(500, distance);
 
-    new mapgl.Marker(map, {
-        coordinates: guessCoords,
-        icon: './marker.svg',
-        anchor: [15, 45],
-        zIndex: 5,
-    });
-
     map.setMinZoom(2);
     map.setZoom(zoom, {
         duration: duration,
@@ -130,16 +125,25 @@ $('.popup-accept').addEventListener('click', () => {
             zIndex: 1,
         },
         duration,
+        passedTime,
     );
     map.once('moveend', () => {
+        new mapgl.Marker(map, {
+            coordinates: guessCoords,
+            icon: './marker.svg',
+            anchor: [15, 45],
+            zIndex: 5,
+        });
+
         const distance = geoDistance(guessCoords, realCoords) / 1000;
 
         const points = calcPoints(distance, passedTime / 1000);
         const status = calcStatus(points);
         const statusText = getStatusText(status);
+        const color = getStatusColor(status);
 
         $('.end-top-text').innerHTML = /* HTML */ `
-            <span class="end-${status}">${statusText}!</span> Ты заработал
+            <span class="end-bold" style="color: ${color};">${statusText}!</span> Ты заработал
             <span class="end-bold">${points}</span> очков!
         `;
 
@@ -150,6 +154,10 @@ $('.popup-accept').addEventListener('click', () => {
             <span class="end-bold">${dist}&nbsp;км</span> за
             <span class="end-bold">${time}&nbsp;сек</span>
         `;
+
+        $('.end-bottom-share').innerHTML = getShareHtml(
+            `Я угадал ${city.name} на карте с точностью ${dist}&nbsp;км и заработал ${points} очков!`,
+        );
 
         timer.style.display = 'none';
         $('.end-wrapper').style.display = '';

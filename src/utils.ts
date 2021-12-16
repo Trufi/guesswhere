@@ -99,6 +99,7 @@ export class AnimatedPolyline {
         private map: mapgl.Map,
         private options: mapgl.PolylineOptions,
         private duration: number,
+        private passedTime: number,
     ) {
         this.coordinates = options.coordinates;
 
@@ -140,6 +141,10 @@ export class AnimatedPolyline {
             length += dx;
         }
 
+        const points = calcPoints(length / 1000, this.passedTime / 1000);
+        const status = calcStatus(points);
+
+        this.options.color = getStatusColor(status);
         this.options.coordinates = currentCoordinates;
         this.polyline.destroy();
         this.polyline = new mapgl.Polyline(this.map, this.options);
@@ -185,4 +190,15 @@ export function getStatusText(status: Status) {
         5: 'Увы',
     };
     return text[status];
+}
+
+export function getStatusColor(status: Status) {
+    const colors: { [key in Status]: string } = {
+        1: '#00e307',
+        2: '#84bb00',
+        3: '#ffb100',
+        4: '#ff8100',
+        5: '#ff2323',
+    };
+    return colors[status];
 }
