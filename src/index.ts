@@ -179,11 +179,9 @@ $('.popup-accept').addEventListener('click', () => {
         const statusText = getStatusText(status);
         const color = getStatusColor(status);
 
-        $('.end-top-text').innerHTML = /* HTML */ ``;
-
         const dist = Math.round(distance * 10) / 10;
         const time = Math.round((passedTime / 1000) * 10) / 10;
-        $('.end-bottom-text').innerHTML = /* HTML */ `
+        $('.end-text').innerHTML = /* HTML */ `
             <div class="end-bold end-title" style="color: ${color};">${statusText}!</div>
             Ты заработал
             <span class="end-bold">${points}</span> ${pointsPlural(points)}, угадав
@@ -192,7 +190,7 @@ $('.popup-accept').addEventListener('click', () => {
             <span class="end-bold">${time}&nbsp;сек</span>!
         `;
 
-        $('.end-bottom-share').innerHTML = getShareHtml(
+        $('.end-share').innerHTML = getShareHtml(
             `Я угадал ${
                 city.name
             } на карте с точностью ${dist}&nbsp;км и заработал ${points} ${pointsPlural(points)}!`,
@@ -201,10 +199,10 @@ $('.popup-accept').addEventListener('click', () => {
         $('.end-restart').addEventListener('click', () => window.location.reload());
 
         timer.style.display = 'none';
-        $('.end-wrapper').style.display = '';
+        $('.end').style.display = '';
 
         if (isMobileView) {
-            const bottomHeight = $('.end-bottom').clientHeight;
+            const bottomHeight = $('.end').clientHeight;
             map.setControlsLayoutPadding({ bottom: bottomHeight });
         }
     });
