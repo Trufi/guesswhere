@@ -27,7 +27,6 @@ const map = new mapgl.Map('map', {
     minZoom,
     zoomControl: false,
     lang: 'ru',
-    pitch: 45,
 });
 window.addEventListener('resize', () => map.invalidateSize());
 
