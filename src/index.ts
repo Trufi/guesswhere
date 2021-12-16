@@ -16,7 +16,7 @@ import {
 } from './utils';
 import { getShareHtml } from './share';
 
-const duration = 5000;
+const duration = 3000;
 const minZoom = 16;
 const { position: realCoords, city } = getRandomPosition();
 
@@ -117,7 +117,7 @@ $('.popup-accept').addEventListener('click', () => {
 
     map.setMinZoom(2);
     map.setZoom(zoom, {
-        duration: duration,
+        duration,
         easing: 'easeOutQuart',
     });
 
@@ -125,9 +125,19 @@ $('.popup-accept').addEventListener('click', () => {
     vec2lerp(nextCenter, guessMapPoints, realMapPoints, 0.5);
 
     map.setCenter(mapPointToLngLat(nextCenter), {
-        duration: duration,
+        duration,
         easing: 'easeInQuart',
     });
+
+    const isMobileView = window.innerWidth < 800;
+    if (isMobileView) {
+        map.setPadding(
+            { bottom: 160 },
+            {
+                duration,
+            },
+        );
+    }
 
     const coordinates = calcGeoLine(realCoords, guessCoords);
     new AnimatedPolyline(
@@ -169,17 +179,17 @@ $('.popup-accept').addEventListener('click', () => {
         const statusText = getStatusText(status);
         const color = getStatusColor(status);
 
-        $('.end-top-text').innerHTML = /* HTML */ `
-            <span class="end-bold" style="color: ${color};">${statusText}!</span> Ты заработал
-            <span class="end-bold">${points}</span> ${pointsPlural(points)}!
-        `;
+        $('.end-top-text').innerHTML = /* HTML */ ``;
 
         const dist = Math.round(distance * 10) / 10;
         const time = Math.round((passedTime / 1000) * 10) / 10;
         $('.end-bottom-text').innerHTML = /* HTML */ `
-            Ты угадал <span class="end-bold">${city.name}</span> с точностью
+            <div class="end-bold end-title" style="color: ${color};">${statusText}!</div>
+            Ты заработал
+            <span class="end-bold">${points}</span> ${pointsPlural(points)}, угадав
+            <span class="end-bold">${city.name}</span> с точностью
             <span class="end-bold">${dist}&nbsp;км</span> за
-            <span class="end-bold">${time}&nbsp;сек</span>
+            <span class="end-bold">${time}&nbsp;сек</span>!
         `;
 
         $('.end-bottom-share').innerHTML = getShareHtml(
@@ -192,5 +202,10 @@ $('.popup-accept').addEventListener('click', () => {
 
         timer.style.display = 'none';
         $('.end-wrapper').style.display = '';
+
+        if (isMobileView) {
+            const bottomHeight = $('.end-bottom').clientHeight;
+            map.setControlsLayoutPadding({ bottom: bottomHeight });
+        }
     });
 });
