@@ -159,7 +159,26 @@
                 transform: translate(-15px, -43px);
             }
 
-            .end-wrapper {
+            .end-top {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                height: 250px;
+                padding: 0 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                pointer-events: none;
+            }
+            .end-top-text {
+                color: #646464;
+                text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+                font-size: 55px;
+                text-align: center;
+                pointer-events: all;
+            }
+            .end-bottom {
                 position: absolute;
                 bottom: 0;
                 left: 0;
@@ -170,13 +189,188 @@
                 justify-content: center;
                 align-items: center;
                 pointer-events: none;
+                flex-direction: column;
             }
-            .end {
-                color: #474747;
+            .end-bottom-text {
+                color: #646464;
                 text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
                 font-size: 50px;
                 text-align: center;
                 pointer-events: all;
+            }
+            .end-bottom-share {
+                pointer-events: all;
+            }
+            .end-bold {
+                font-weight: 700;
+                color: #474747;
+            }
+            .resp-sharing-button__link,
+            .resp-sharing-button__icon {
+                display: inline-block;
+            }
+
+            .resp-sharing-button__link {
+                text-decoration: none;
+                color: #fff;
+                margin: 0.5em;
+            }
+
+            .resp-sharing-button {
+                border-radius: 5px;
+                transition: 25ms ease-out;
+                padding: 0.5em 0.75em;
+                font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            }
+
+            .resp-sharing-button__icon svg {
+                width: 1em;
+                height: 1em;
+                margin-right: 0.4em;
+                vertical-align: top;
+            }
+
+            .resp-sharing-button--small svg {
+                margin: 0;
+                vertical-align: middle;
+            }
+
+            /* Non solid icons get a stroke */
+            .resp-sharing-button__icon {
+                stroke: #fff;
+                fill: none;
+            }
+
+            /* Solid icons get a fill */
+            .resp-sharing-button__icon--solid,
+            .resp-sharing-button__icon--solidcircle {
+                fill: #fff;
+                stroke: none;
+            }
+
+            .resp-sharing-button--twitter {
+                background-color: #55acee;
+            }
+
+            .resp-sharing-button--twitter:hover {
+                background-color: #2795e9;
+            }
+
+            .resp-sharing-button--pinterest {
+                background-color: #bd081c;
+            }
+
+            .resp-sharing-button--pinterest:hover {
+                background-color: #8c0615;
+            }
+
+            .resp-sharing-button--facebook {
+                background-color: #3b5998;
+            }
+
+            .resp-sharing-button--facebook:hover {
+                background-color: #2d4373;
+            }
+
+            .resp-sharing-button--tumblr {
+                background-color: #35465c;
+            }
+
+            .resp-sharing-button--tumblr:hover {
+                background-color: #222d3c;
+            }
+
+            .resp-sharing-button--reddit {
+                background-color: #5f99cf;
+            }
+
+            .resp-sharing-button--reddit:hover {
+                background-color: #3a80c1;
+            }
+
+            .resp-sharing-button--google {
+                background-color: #dd4b39;
+            }
+
+            .resp-sharing-button--google:hover {
+                background-color: #c23321;
+            }
+
+            .resp-sharing-button--linkedin {
+                background-color: #0077b5;
+            }
+
+            .resp-sharing-button--linkedin:hover {
+                background-color: #046293;
+            }
+
+            .resp-sharing-button--email {
+                background-color: #777;
+            }
+
+            .resp-sharing-button--email:hover {
+                background-color: #5e5e5e;
+            }
+
+            .resp-sharing-button--xing {
+                background-color: #1a7576;
+            }
+
+            .resp-sharing-button--xing:hover {
+                background-color: #114c4c;
+            }
+
+            .resp-sharing-button--whatsapp {
+                background-color: #25d366;
+            }
+
+            .resp-sharing-button--whatsapp:hover {
+                background-color: #1da851;
+            }
+
+            .resp-sharing-button--hackernews {
+                background-color: #ff6600;
+            }
+            .resp-sharing-button--hackernews:hover,
+            .resp-sharing-button--hackernews:focus {
+                background-color: #fb6200;
+            }
+
+            .resp-sharing-button--vk {
+                background-color: #507299;
+            }
+
+            .resp-sharing-button--vk:hover {
+                background-color: #43648c;
+            }
+
+            .resp-sharing-button--twitter {
+                background-color: #55acee;
+                border-color: #55acee;
+            }
+
+            .resp-sharing-button--twitter:hover,
+            .resp-sharing-button--twitter:active {
+                background-color: #2795e9;
+                border-color: #2795e9;
+            }
+
+            .resp-sharing-button--vk {
+                background-color: #507299;
+                border-color: #507299;
+            }
+
+            .resp-sharing-button--vk:hover .resp-sharing-button--vk:active {
+                background-color: #43648c;
+                border-color: #43648c;
+            }
+
+            .resp-sharing-button--telegram {
+                background-color: #54a9eb;
+            }
+
+            .resp-sharing-button--telegram:hover {
+                background-color: #4b97d1;
             }
         </style>
     </head>
@@ -201,8 +395,21 @@
                 </div>
             </div>
         </div>
-        <div class="end-wrapper">
-            <div class="end"></div>
+        <div class="end-wrapper" style="display: none">
+            <div class="end-top">
+                <div class="end-top-text">
+                    <span class="end-1">Превосходно!</span> Ты заработал
+                    <span class="end-bold">925</span> очков!
+                </div>
+            </div>
+            <div class="end-bottom">
+                <div class="end-bottom-text">
+                    Ты угадал <span class="end-bold">Новосибирск</span> с точностью
+                    <span class="end-bold">20.2&nbsp;км</span> за
+                    <span class="end-bold">15.5&nbsp;сек</span>
+                </div>
+                <div class="end-bottom-share"></div>
+            </div>
         </div>
         <script src="https://mapgl.2gis.com/api/js/v1"></script>
         <script src="./dist/index.js"></script>
