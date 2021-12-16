@@ -206,10 +206,18 @@
                 color: #474747;
             }
             .end-share {
-                pointer-events: all;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
             }
-            .end-restart {
+            .end-restart,
+            .end-share-button {
                 display: inline-block;
+                height: 34px;
+                line-height: 34px;
+                border-radius: 14px;
                 background: #fff;
                 font-weight: 700;
                 color: #424242;
@@ -218,6 +226,19 @@
                 user-select: none;
                 margin: 0.5em;
             }
+            .end-restart {
+                padding: 0 12px;
+            }
+            .end-share-button {
+                width: 44px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .end-share-button img {
+                height: 20px;
+            }
+            .end-share-button:hover,
             .end-restart:hover {
                 background: rgb(247, 247, 247);
             }
@@ -230,6 +251,10 @@
                     background: #fff;
                     padding: 0 20px;
                     bottom: 0;
+                    pointer-events: none;
+                }
+                .end-share {
+                    pointer-events: all;
                 }
                 .end-text {
                     color: #2c2c2c;
@@ -437,7 +462,13 @@
             <div class="end-text-wrapper">
                 <div class="end-text"></div>
             </div>
-            <div class="end-share"></div>
+            <div class="end-share">
+                <div class="end-restart">РЕСТАРТ</div>
+                <div class="end-share-button" style="display: none">
+                    <img src="./share-button.png" />
+                </div>
+                <div class="end-share-social"></div>
+            </div>
         </div>
         <script src="https://mapgl.2gis.com/api/js/v1"></script>
         <script src="./dist/index.js"></script>

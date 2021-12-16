@@ -1,7 +1,6 @@
 export function getShareHtml(text: string) {
     const urlText = decodeURIComponent(text);
     return /* HTML */ `
-        <div class="end-restart resp-sharing-button">РЕСТАРТ</div>
         <a
             class="resp-sharing-button__link"
             href="https://twitter.com/intent/tweet/?text=${urlText}&amp;url=https%3A%2F%2Ftrufi.github.io%2Fguesswhere"

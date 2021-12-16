@@ -190,13 +190,27 @@ $('.popup-accept').addEventListener('click', () => {
             <span class="end-bold">${time}&nbsp;сек</span>!
         `;
 
-        $('.end-share').innerHTML = getShareHtml(
-            `Я угадал ${
-                city.name
-            } на карте с точностью ${dist}&nbsp;км и заработал ${points} ${pointsPlural(points)}!`,
-        );
+        const shareText = `Я угадал ${
+            city.name
+        } на карте с точностью ${dist}&nbsp;км и заработал ${points} ${pointsPlural(points)}!`;
 
         $('.end-restart').addEventListener('click', () => window.location.reload());
+
+        if (isMobileView && navigator.share) {
+            const shareButton = $('.end-share-button');
+            shareButton.style.display = '';
+            shareButton.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Угадай, где ты на карте?',
+                        text: shareText,
+                        url: 'https://trufi.github.io/guesswhere/',
+                    });
+                }
+            });
+        } else {
+            $('.end-share-social').innerHTML = getShareHtml(shareText);
+        }
 
         timer.style.display = 'none';
         $('.end').style.display = '';
