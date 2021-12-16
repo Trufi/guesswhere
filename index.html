@@ -65,14 +65,6 @@
                 justify-content: center;
                 pointer-events: none;
             }
-            @keyframes cycle {
-                from {
-                    color: #474747;
-                }
-                to {
-                    color: #2fa833;
-                }
-            }
             .guess {
                 padding: 0 30px;
                 border-radius: 35px;
@@ -81,7 +73,7 @@
                 font-size: 40px;
                 line-height: 65px;
                 font-weight: 600;
-                color: #0b700f;
+                color: #03ab0a;
                 cursor: pointer;
                 box-shadow: 0 1px 3px 0 rgb(38 38 38 / 50%);
                 pointer-events: all;
@@ -104,7 +96,7 @@
                 height: 100%;
                 justify-content: center;
                 align-items: center;
-                background: rgba(82, 82, 82, 0.7);
+                background: rgba(82, 82, 82, 0.8);
                 z-index: 100;
             }
             .popup-inner {
@@ -144,6 +136,7 @@
                 justify-content: center;
                 user-select: none;
                 pointer-events: none;
+                z-index: 100;
             }
             .popup-buttons-inner {
                 box-shadow: 0 1px 3px 0 rgb(38 38 38 / 50%);
@@ -160,7 +153,6 @@
                 text-align: center;
                 font-size: 21px;
                 line-height: 50px;
-                color: #666;
                 pointer-events: all;
             }
             .popup-button:hover {
@@ -196,13 +188,10 @@
                 pointer-events: none;
             }
             .end-top-text {
-                color: #646464;
-                text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-                font-size: 55px;
+                color: #424242;
+                text-shadow: #000 0 1px 2px;
+                font-size: 40px;
                 text-align: center;
-                pointer-events: all;
-                border-radius: 15px;
-                padding: 5px 10px;
             }
             .end-bottom {
                 position: absolute;
@@ -213,8 +202,8 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                pointer-events: none;
                 flex-direction: column;
+                z-index: 100;
             }
             .end-bottom-text-wrapper {
                 display: flex;
@@ -222,44 +211,54 @@
             }
             .end-bottom-text {
                 color: #646464;
-                text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
                 font-size: 50px;
                 text-align: center;
-                pointer-events: all;
-                border-radius: 15px;
-                padding: 5px 10px;
+                margin-bottom: 15px;
+                text-shadow: #000 0 1px 2px;
             }
-            .end-bottom-share {
-                pointer-events: all;
+            .end-title {
+                font-size: 50px;
             }
             .end-bold {
                 font-weight: 700;
                 color: #474747;
             }
-            @media (max-width: 650px) {
-                .end-top-text {
-                    font-size: 30px;
-                    background: rgba(255, 255, 255, 0.8);
-                }
-
-                .end-bottom-text {
-                    font-size: 25px;
-                    background: rgba(255, 255, 255, 0.8);
-                }
+            .end-bottom-share {
+                pointer-events: all;
             }
-
             .end-restart {
                 display: inline-block;
                 background: #fff;
                 font-weight: 700;
-                color: #666;
-                box-shadow: 0 1px 3px 0 rgb(38 38 38 / 50%);
+                color: #424242;
+                box-shadow: 0 1px 2px 0 rgb(38 38 38 / 50%);
                 cursor: pointer;
                 user-select: none;
                 margin: 0.5em;
             }
             .end-restart:hover {
                 background: rgb(247, 247, 247);
+            }
+            @media (max-width: 800px) {
+                .end-title {
+                    font-size: 45px;
+                    line-height: 47px;
+                }
+                .end-bottom {
+                    background: #fff;
+                    padding: 0 20px;
+                    bottom: 0;
+                }
+                .end-bottom-text {
+                    color: #2c2c2c;
+                    font-size: 20px;
+                    line-height: 27px;
+                    margin: 5px 0 5px;
+                    text-shadow: none;
+                }
+                .end-bold {
+                    color: #2c2c2c;
+                }
             }
 
             .resp-sharing-button__link,
@@ -480,7 +479,6 @@
                 dataLayer.push(arguments);
             }
             gtag('js', new Date());
-
             gtag('config', 'G-ZS1KBFEPY8');
         </script>
     </body>
