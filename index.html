@@ -175,25 +175,7 @@
                 background-image: url(./marker.svg);
                 transform: translate(-15px, -43px);
             }
-
-            .end-top {
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 30px;
-                padding: 0 30px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                pointer-events: none;
-            }
-            .end-top-text {
-                color: #424242;
-                text-shadow: #000 0 1px 2px;
-                font-size: 40px;
-                text-align: center;
-            }
-            .end-bottom {
+            .end {
                 position: absolute;
                 bottom: 20px;
                 left: 0;
@@ -205,11 +187,11 @@
                 flex-direction: column;
                 z-index: 100;
             }
-            .end-bottom-text-wrapper {
+            .end-text-wrapper {
                 display: flex;
                 justify-content: center;
             }
-            .end-bottom-text {
+            .end-text {
                 color: #646464;
                 font-size: 50px;
                 text-align: center;
@@ -223,7 +205,7 @@
                 font-weight: 700;
                 color: #474747;
             }
-            .end-bottom-share {
+            .end-share {
                 pointer-events: all;
             }
             .end-restart {
@@ -244,12 +226,12 @@
                     font-size: 45px;
                     line-height: 47px;
                 }
-                .end-bottom {
+                .end {
                     background: #fff;
                     padding: 0 20px;
                     bottom: 0;
                 }
-                .end-bottom-text {
+                .end-text {
                     color: #2c2c2c;
                     font-size: 20px;
                     line-height: 27px;
@@ -451,23 +433,11 @@
                 </div>
             </div>
         </div>
-        <div class="end-wrapper" style="display: none">
-            <div class="end-top">
-                <div class="end-top-text">
-                    <span class="end-1">Превосходно!</span> Ты заработал
-                    <span class="end-bold">925</span> очков!
-                </div>
+        <div class="end" style="display: none">
+            <div class="end-text-wrapper">
+                <div class="end-text"></div>
             </div>
-            <div class="end-bottom">
-                <div class="end-bottom-text-wrapper">
-                    <div class="end-bottom-text">
-                        Ты угадал <span class="end-bold">Новосибирск</span> с точностью
-                        <span class="end-bold">20.2&nbsp;км</span> за
-                        <span class="end-bold">15.5&nbsp;сек</span>
-                    </div>
-                </div>
-                <div class="end-bottom-share"></div>
-            </div>
+            <div class="end-share"></div>
         </div>
         <script src="https://mapgl.2gis.com/api/js/v1"></script>
         <script src="./dist/index.js"></script>
