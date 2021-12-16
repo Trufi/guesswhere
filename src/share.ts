@@ -30,7 +30,7 @@ export function getShareHtml(text: string) {
         </a>
         <a
             class="resp-sharing-button__link"
-            href="http://vk.com/share.php?title=${urlText}&amp;url=https%3A%2F%2Ftrufi.github.io%2Fguesswhere"
+            href="https://vk.com/share.php?title=${urlText}&amp;url=https%3A%2F%2Ftrufi.github.io%2Fguesswhere&image=https%3A%2F%2Ftrufi.github.io%2Fguesswhere%2Fshare.png"
             target="_blank"
             rel="noopener"
             aria-label=""
