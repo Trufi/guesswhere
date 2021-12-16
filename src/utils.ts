@@ -202,3 +202,20 @@ export function getStatusColor(status: Status) {
     };
     return colors[status];
 }
+
+export function findCity(lngLat: number[]) {
+    let nearestCity: string | undefined;
+    let nearestDistance: number = Infinity;
+
+    for (let i = 0; i < cities.length; i++) {
+        const city = cities[i];
+
+        const distance = geoDistance(city.center, lngLat);
+        if (distance < 50000 && distance < nearestDistance) {
+            nearestCity = city.name;
+            nearestDistance = distance;
+        }
+    }
+
+    return nearestCity;
+}

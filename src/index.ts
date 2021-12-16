@@ -11,6 +11,7 @@ import {
     calcStatus,
     getStatusText,
     getStatusColor,
+    findCity,
 } from './utils';
 import { getShareHtml } from './share';
 
@@ -38,9 +39,9 @@ const popupMap = new mapgl.Map('popup-map', {
 });
 
 const labelStyle = {
-    fontSize: 20,
-    color: '#474747',
-    haloRadius: 1,
+    fontSize: 25,
+    color: '#0e68bb',
+    haloRadius: 2,
     haloColor: '#fff',
 };
 
@@ -128,11 +129,22 @@ $('.popup-accept').addEventListener('click', () => {
         passedTime,
     );
     map.once('moveend', () => {
+        realMarker.setLabel({
+            ...labelStyle,
+            text: city.name,
+        });
+
+        const guessCity = findCity(guessCoords);
+
         new mapgl.Marker(map, {
             coordinates: guessCoords,
             icon: './marker.svg',
             anchor: [15, 45],
             zIndex: 5,
+            label: {
+                ...labelStyle,
+                text: guessCity ? guessCity : 'Какое-то местечко',
+            },
         });
 
         const distance = geoDistance(guessCoords, realCoords) / 1000;
