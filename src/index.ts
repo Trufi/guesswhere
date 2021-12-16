@@ -98,7 +98,10 @@ $('.popup-accept').addEventListener('click', () => {
     const guessMapPoints = mapPointFromLngLat(guessCoords);
     const realMapPoints = mapPointFromLngLat(realCoords);
     const distance = vec2dist(guessMapPoints, realMapPoints);
-    const zoom = pixelsAndMapPointDistanceToZoom(500, distance);
+    const zoom = pixelsAndMapPointDistanceToZoom(
+        Math.min(window.innerWidth, window.innerHeight) - 200,
+        distance,
+    );
 
     map.setMinZoom(2);
     map.setZoom(zoom, {
@@ -143,7 +146,7 @@ $('.popup-accept').addEventListener('click', () => {
             zIndex: 5,
             label: {
                 ...labelStyle,
-                text: guessCity ? guessCity : 'Какое-то местечко',
+                text: guessCity ? guessCity : '???',
             },
         });
 
