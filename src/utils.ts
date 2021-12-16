@@ -160,7 +160,7 @@ export function calcPoints(distance: number, seconds: number) {
     const badTime = 300;
 
     const distanceModifier = 1 - clamp(distance, 1, badDistance) / badDistance;
-    const timeModifier = 1 - clamp(seconds, 1, badTime) / badTime;
+    const timeModifier = 1 - clamp(seconds, 20, badTime) / badTime;
 
     const maxPoints = 1000;
     return Math.round(maxPoints * distanceModifier * timeModifier);
@@ -222,7 +222,8 @@ export function findCity(lngLat: number[]) {
 
 export function pointsPlural(x: number) {
     const f = x % 10;
-    if (x < 10 || x > 20) {
+    const ff = x % 100;
+    if (ff < 10 || ff > 20) {
         if (f === 1) {
             return 'очко';
         } else if (f >= 2 && f <= 4) {

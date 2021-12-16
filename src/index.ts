@@ -192,7 +192,7 @@ $('.popup-accept').addEventListener('click', () => {
 
         const shareText = `Я угадал ${
             city.name
-        } на карте с точностью ${dist}&nbsp;км и заработал ${points} ${pointsPlural(points)}!`;
+        } на карте с точностью ${dist} км и заработал ${points} ${pointsPlural(points)}!`;
 
         $('.end-restart').addEventListener('click', () => window.location.reload());
 
