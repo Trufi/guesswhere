@@ -19,13 +19,13 @@
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Угадай, где ты на карте?" />
         <meta property="og:description" content="Узнай по карте город, в котором находишься" />
-        <meta property="og:image" content="https://trufi.github.io/guesswhere/share.jpg" />
+        <meta property="og:image" content="https://trufi.github.io/guesswhere/share.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="trufi.github.io" />
         <meta property="twitter:url" content="https://trufi.github.io/guesswhere/" />
         <meta name="twitter:title" content="Угадай, где ты на карте?" />
         <meta name="twitter:description" content="Узнай по карте город, в котором находишься" />
-        <meta name="twitter:image" content="https://trufi.github.io/guesswhere/share.jpg" />
+        <meta name="twitter:image" content="https://trufi.github.io/guesswhere/share.png" />
 
         <style>
             html,
@@ -39,7 +39,7 @@
             }
             .timer-wrapper {
                 position: absolute;
-                top: 30px;
+                top: 20px;
                 left: 0;
                 right: 0;
                 z-index: 150;
@@ -48,17 +48,19 @@
                 pointer-events: none;
             }
             .timer {
-                color: #474747;
+                color: #646464;
                 text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
-                font-size: 60px;
+                font-size: 40px;
                 font-weight: 700;
+                opacity: 0;
+                transition: opacity 3s;
             }
             .guess-wrapper {
                 position: absolute;
                 bottom: 30px;
                 left: 0;
                 right: 0;
-                height: 50px;
+                height: 65px;
                 display: flex;
                 justify-content: center;
                 pointer-events: none;
@@ -77,12 +79,13 @@
                 background: rgba(255, 255, 255, 1);
                 text-align: center;
                 font-size: 40px;
-                line-height: 50px;
+                line-height: 65px;
                 font-weight: 600;
                 color: #0b700f;
                 cursor: pointer;
                 box-shadow: 0 1px 3px 0 rgb(38 38 38 / 50%);
                 pointer-events: all;
+                user-select: none;
 
                 animation-name: cycle;
                 animation-iteration-count: infinite;
@@ -185,8 +188,7 @@
                 position: absolute;
                 left: 0;
                 right: 0;
-                top: 0;
-                height: 250px;
+                top: 30px;
                 padding: 0 30px;
                 display: flex;
                 justify-content: center;
@@ -199,13 +201,14 @@
                 font-size: 55px;
                 text-align: center;
                 pointer-events: all;
+                border-radius: 15px;
+                padding: 5px 10px;
             }
             .end-bottom {
                 position: absolute;
-                bottom: 0;
+                bottom: 20px;
                 left: 0;
                 right: 0;
-                height: 250px;
                 padding: 0 30px;
                 display: flex;
                 justify-content: center;
@@ -213,12 +216,18 @@
                 pointer-events: none;
                 flex-direction: column;
             }
+            .end-bottom-text-wrapper {
+                display: flex;
+                justify-content: center;
+            }
             .end-bottom-text {
                 color: #646464;
                 text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
                 font-size: 50px;
                 text-align: center;
                 pointer-events: all;
+                border-radius: 15px;
+                padding: 5px 10px;
             }
             .end-bottom-share {
                 pointer-events: all;
@@ -230,11 +239,27 @@
             @media (max-width: 650px) {
                 .end-top-text {
                     font-size: 30px;
+                    background: rgba(255, 255, 255, 0.8);
                 }
 
                 .end-bottom-text {
                     font-size: 25px;
+                    background: rgba(255, 255, 255, 0.8);
                 }
+            }
+
+            .end-restart {
+                display: inline-block;
+                background: #fff;
+                font-weight: 700;
+                color: #666;
+                box-shadow: 0 1px 3px 0 rgb(38 38 38 / 50%);
+                cursor: pointer;
+                user-select: none;
+                margin: 0.5em;
+            }
+            .end-restart:hover {
+                background: rgb(247, 247, 247);
             }
 
             .resp-sharing-button__link,
@@ -249,7 +274,7 @@
             }
 
             .resp-sharing-button {
-                border-radius: 5px;
+                border-radius: 14px;
                 transition: 25ms ease-out;
                 padding: 0.5em 0.75em;
                 font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -435,10 +460,12 @@
                 </div>
             </div>
             <div class="end-bottom">
-                <div class="end-bottom-text">
-                    Ты угадал <span class="end-bold">Новосибирск</span> с точностью
-                    <span class="end-bold">20.2&nbsp;км</span> за
-                    <span class="end-bold">15.5&nbsp;сек</span>
+                <div class="end-bottom-text-wrapper">
+                    <div class="end-bottom-text">
+                        Ты угадал <span class="end-bold">Новосибирск</span> с точностью
+                        <span class="end-bold">20.2&nbsp;км</span> за
+                        <span class="end-bold">15.5&nbsp;сек</span>
+                    </div>
                 </div>
                 <div class="end-bottom-share"></div>
             </div>

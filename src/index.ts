@@ -12,12 +12,16 @@ import {
     getStatusText,
     getStatusColor,
     findCity,
+    pointsPlural,
 } from './utils';
 import { getShareHtml } from './share';
 
 const duration = 3000;
 const minZoom = 16;
 const { position: realCoords, city } = getRandomPosition();
+
+realCoords[0] = 37.545054;
+realCoords[1] = 55.43065;
 
 const map = new mapgl.Map('map', {
     key: '042b5b75-f847-4f2a-b695-b5f58adc9dfd',
@@ -26,6 +30,7 @@ const map = new mapgl.Map('map', {
     minZoom,
     zoomControl: false,
     lang: 'ru',
+    pitch: 45,
 });
 window.addEventListener('resize', () => map.invalidateSize());
 
@@ -39,27 +44,42 @@ const popupMap = new mapgl.Map('popup-map', {
 });
 
 const labelStyle = {
-    fontSize: 25,
+    fontSize: 28,
     color: '#0e68bb',
     haloRadius: 2,
     haloColor: '#fff',
 };
 
+const k = 3;
+
 const realMarker = new mapgl.Marker(map, {
     coordinates: realCoords,
     icon: './marker.svg',
-    anchor: [15, 45],
+    size: [30 * k, 45 * k],
+    anchor: [30 * k * 0.5, 45 * k],
     zIndex: 5,
     label: {
         ...labelStyle,
+        fontSize: 40,
         text: 'Где я?',
     },
 });
 
 let timerStoped = false;
 const timer = $('.timer');
-const startTime = Date.now();
+let startTime = -1;
 let passedTime = 0;
+
+const startTimer = () => {
+    if (startTime === -1) {
+        startTime = Date.now();
+        timer.style.opacity = String(1);
+        requestAnimationFrame(update);
+    }
+};
+setTimeout(startTimer, 10000);
+map.once('idle', startTimer);
+
 function update() {
     requestAnimationFrame(update);
     if (!timerStoped) {
@@ -67,7 +87,6 @@ function update() {
         timer.innerHTML = (passedTime / 1000).toFixed(1);
     }
 }
-update();
 
 const guessButton = $('.guess');
 const popup = $('.popup');
@@ -159,7 +178,7 @@ $('.popup-accept').addEventListener('click', () => {
 
         $('.end-top-text').innerHTML = /* HTML */ `
             <span class="end-bold" style="color: ${color};">${statusText}!</span> Ты заработал
-            <span class="end-bold">${points}</span> очков!
+            <span class="end-bold">${points}</span> ${pointsPlural(points)}!
         `;
 
         const dist = Math.round(distance * 10) / 10;
@@ -171,8 +190,12 @@ $('.popup-accept').addEventListener('click', () => {
         `;
 
         $('.end-bottom-share').innerHTML = getShareHtml(
-            `Я угадал ${city.name} на карте с точностью ${dist}&nbsp;км и заработал ${points} очков!`,
+            `Я угадал ${
+                city.name
+            } на карте с точностью ${dist}&nbsp;км и заработал ${points} ${pointsPlural(points)}!`,
         );
+
+        $('.end-restart').addEventListener('click', () => window.location.reload());
 
         timer.style.display = 'none';
         $('.end-wrapper').style.display = '';

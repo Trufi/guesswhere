@@ -157,7 +157,7 @@ export class AnimatedPolyline {
 
 export function calcPoints(distance: number, seconds: number) {
     const badDistance = 3500;
-    const badTime = 180;
+    const badTime = 300;
 
     const distanceModifier = 1 - clamp(distance, 1, badDistance) / badDistance;
     const timeModifier = 1 - clamp(seconds, 1, badTime) / badTime;
@@ -218,4 +218,16 @@ export function findCity(lngLat: number[]) {
     }
 
     return nearestCity;
+}
+
+export function pointsPlural(x: number) {
+    const f = x % 10;
+    if (x < 10 || x > 20) {
+        if (f === 1) {
+            return 'очко';
+        } else if (f >= 2 && f <= 4) {
+            return 'очка';
+        }
+    }
+    return 'очков';
 }
