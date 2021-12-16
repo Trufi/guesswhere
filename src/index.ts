@@ -54,7 +54,6 @@ const realMarker = new mapgl.Marker(map, {
     zIndex: 5,
     label: {
         ...labelStyle,
-        fontSize: 40,
         text: 'Где я?',
     },
 });
