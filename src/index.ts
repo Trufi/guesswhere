@@ -20,9 +20,6 @@ const duration = 3000;
 const minZoom = 16;
 const { position: realCoords, city } = getRandomPosition();
 
-realCoords[0] = 37.545054;
-realCoords[1] = 55.43065;
-
 const map = new mapgl.Map('map', {
     key: '042b5b75-f847-4f2a-b695-b5f58adc9dfd',
     center: realCoords,
