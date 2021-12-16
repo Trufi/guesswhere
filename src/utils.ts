@@ -1,6 +1,8 @@
 import { mapPointToLngLat, mapPointFromLngLat, mapPointsFromMeters } from '@trufi/utils/mapPoint';
 import { worldSize } from '@trufi/utils/mapPoint/constants';
-import { degToRad, radToDeg } from '@trufi/utils/common';
+import { degToRad, radToDeg, clamp } from '@trufi/utils/common';
+import { geoDistance } from '@trufi/utils/geo/distance';
+import { vec2lerp } from '@trufi/utils/vec2';
 import { cities } from './data';
 
 const maxMeters = 5000;
@@ -74,4 +76,113 @@ function calcMidPoint(lngLat1: number[], lngLat2: number[]) {
     const lng = Math.atan2(y, x);
 
     return [radToDeg(lng), radToDeg(lat)];
+}
+
+/**
+ * - t время, прошедшее с начала анимации
+ * - b начальное значение анимируемого параметра
+ * - с насколько должен измениться параметр в ходе анимации
+ * - d продолжительность анимации
+ * - x не используется
+ */
+function easeInQuad(t: number, b: number, c: number, d: number) {
+    return c * (t /= d) * t * t + b;
+}
+
+export class AnimatedPolyline {
+    private creationTime = Date.now();
+    private length = 0;
+    private polyline: mapgl.Polyline;
+    private coordinates: number[][];
+
+    constructor(
+        private map: mapgl.Map,
+        private options: mapgl.PolylineOptions,
+        private duration: number,
+    ) {
+        this.coordinates = options.coordinates;
+
+        options.coordinates = [];
+        this.polyline = new mapgl.Polyline(map, options);
+
+        for (let i = 1; i < this.coordinates.length; i++) {
+            this.length += geoDistance(this.coordinates[i - 1], this.coordinates[i]);
+        }
+        requestAnimationFrame(this.update);
+    }
+
+    public destroy() {
+        this.polyline.destroy();
+    }
+
+    private update = () => {
+        const passedTime = Date.now() - this.creationTime;
+        const t = clamp(passedTime / this.duration, 0, 1);
+        const currentLength = easeInQuad(passedTime, 0, this.length, this.duration);
+
+        const currentCoordinates: number[][] = [this.coordinates[0]];
+
+        let length = 0;
+        for (let i = 1; i < this.coordinates.length; i++) {
+            const prev = this.coordinates[i - 1];
+            const current = this.coordinates[i];
+            const dx = geoDistance(prev, current);
+            if (length + dx < currentLength) {
+                currentCoordinates.push(current);
+            } else {
+                const betweenPoint = [0, 0];
+                const t = clamp((currentLength - length) / dx, 0, 1);
+                vec2lerp(betweenPoint, prev, current, t);
+                currentCoordinates.push(betweenPoint);
+                break;
+            }
+
+            length += dx;
+        }
+
+        this.options.coordinates = currentCoordinates;
+        this.polyline.destroy();
+        this.polyline = new mapgl.Polyline(this.map, this.options);
+
+        if (t !== 1) {
+            requestAnimationFrame(this.update);
+        }
+    };
+}
+
+export function calcPoints(distance: number, seconds: number) {
+    const badDistance = 3500;
+    const badTime = 180;
+
+    const distanceModifier = 1 - clamp(distance, 1, badDistance) / badDistance;
+    const timeModifier = 1 - clamp(seconds, 1, badTime) / badTime;
+
+    const maxPoints = 1000;
+    return Math.round(maxPoints * distanceModifier * timeModifier);
+}
+
+export function calcStatus(points: number) {
+    if (points > 900) {
+        return 1;
+    } else if (points > 600) {
+        return 2;
+    } else if (points > 300) {
+        return 3;
+    } else if (points > 0) {
+        return 4;
+    }
+    return 5;
+}
+
+type Status = ReturnType<typeof calcStatus>;
+
+export function getStatusText(status: Status) {
+    const text: { [key in Status]: string } = {
+        1: 'Превосходно',
+        2: 'Хорошо',
+        3: 'Неплохо',
+        4: 'Почти',
+        5: 'Увы',
+    };
+    return text[status];
 }

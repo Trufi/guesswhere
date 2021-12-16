@@ -159,7 +159,26 @@
                 transform: translate(-15px, -43px);
             }
 
-            .end-wrapper {
+            .end-top {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                height: 250px;
+                padding: 0 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                pointer-events: none;
+            }
+            .end-top-text {
+                color: #646464;
+                text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+                font-size: 55px;
+                text-align: center;
+                pointer-events: all;
+            }
+            .end-bottom {
                 position: absolute;
                 bottom: 0;
                 left: 0;
@@ -171,12 +190,36 @@
                 align-items: center;
                 pointer-events: none;
             }
-            .end {
-                color: #474747;
+            .end-bottom-text {
+                color: #646464;
                 text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
                 font-size: 50px;
                 text-align: center;
                 pointer-events: all;
+            }
+            .end-1 {
+                color: #00e307;
+                font-weight: 700;
+            }
+            .end-2 {
+                color: #84bb00;
+                font-weight: 700;
+            }
+            .end-3 {
+                color: #ffb100;
+                font-weight: 700;
+            }
+            .end-4 {
+                color: #ff8100;
+                font-weight: 700;
+            }
+            .end-5 {
+                color: #ff2323;
+                font-weight: 700;
+            }
+            .end-bold {
+                font-weight: 700;
+                color: #474747;
             }
         </style>
     </head>
@@ -201,8 +244,20 @@
                 </div>
             </div>
         </div>
-        <div class="end-wrapper">
-            <div class="end"></div>
+        <div class="end-wrapper" style="display: none">
+            <div class="end-top">
+                <div class="end-top-text">
+                    <span class="end-1">Превосходно!</span> Ты заработал
+                    <span class="end-bold">925</span> очков!
+                </div>
+            </div>
+            <div class="end-bottom">
+                <div class="end-bottom-text">
+                    Ты угадал <span class="end-bold">Новосибирск</span> с точностью
+                    <span class="end-bold">20.2&nbsp;км</span> за
+                    <span class="end-bold">15.5&nbsp;сек</span>
+                </div>
+            </div>
         </div>
         <script src="https://mapgl.2gis.com/api/js/v1"></script>
         <script src="./dist/index.js"></script>

@@ -1,8 +1,18 @@
 import { vec2dist, vec2lerp } from '@trufi/utils/vec2';
 import { geoDistance } from '@trufi/utils/geo/distance';
 import { mapPointFromLngLat, mapPointToLngLat } from '@trufi/utils/mapPoint';
-import { $, getRandomPosition, pixelsAndMapPointDistanceToZoom, calcGeoLine } from './utils';
+import {
+    $,
+    getRandomPosition,
+    pixelsAndMapPointDistanceToZoom,
+    calcGeoLine,
+    AnimatedPolyline,
+    calcPoints,
+    calcStatus,
+    getStatusText,
+} from './utils';
 
+const duration = 3000;
 const minZoom = 16;
 const { position: realCoords, city } = getRandomPosition();
 
@@ -18,7 +28,7 @@ window.addEventListener('resize', () => map.invalidateSize());
 
 const popupMap = new mapgl.Map('popup-map', {
     key: '042b5b75-f847-4f2a-b695-b5f58adc9dfd',
-    center: [0, 0],
+    center: [77.23746195134629, 59.957078540749734],
     zoom: 2,
     maxZoom: 5,
     zoomControl: false,
@@ -63,15 +73,15 @@ function closePopup() {
     popup.style.display = 'none';
 }
 
-popup.addEventListener('click', closePopup);
+popup.addEventListener('mousedown', closePopup);
+$('.popup-inner').addEventListener('mousedown', (ev) => ev.stopPropagation());
+
 $('.popup-close').addEventListener('click', closePopup);
 
 guessButton.addEventListener('click', () => {
     popup.style.display = '';
     popupMap.invalidateSize();
 });
-
-$('.popup-inner').addEventListener('click', (ev) => ev.stopPropagation());
 
 $('.popup-accept').addEventListener('click', () => {
     closePopup();
@@ -96,7 +106,7 @@ $('.popup-accept').addEventListener('click', () => {
 
     map.setMinZoom(2);
     map.setZoom(zoom, {
-        duration: 5000,
+        duration: duration,
         easing: 'easeOutQuart',
     });
 
@@ -104,31 +114,44 @@ $('.popup-accept').addEventListener('click', () => {
     vec2lerp(nextCenter, guessMapPoints, realMapPoints, 0.5);
 
     map.setCenter(mapPointToLngLat(nextCenter), {
-        duration: 5000,
+        duration: duration,
         easing: 'easeInQuart',
     });
 
-    map.once('moveend', () => {
-        const coordinates = calcGeoLine(guessCoords, realCoords);
-
-        new mapgl.Polyline(map, {
-            coordinates: coordinates,
-            width: 7,
-            color: '#fff',
-        });
-        new mapgl.Polyline(map, {
-            coordinates: coordinates,
+    const coordinates = calcGeoLine(realCoords, guessCoords);
+    new AnimatedPolyline(
+        map,
+        {
+            coordinates,
             width: 4,
+            width2: 7,
             color: '#eb4a4a',
+            color2: '#fff',
             zIndex: 1,
-        });
-
+        },
+        duration,
+    );
+    map.once('moveend', () => {
         const distance = geoDistance(guessCoords, realCoords) / 1000;
 
-        timer.style.display = 'none';
+        const points = calcPoints(distance, passedTime / 1000);
+        const status = calcStatus(points);
+        const statusText = getStatusText(status);
 
-        $('.end').innerHTML = `Вы угадали ${city.name} с точностью ${distance.toFixed(1)}км за ${(
-            passedTime / 1000
-        ).toFixed(1)}сек`;
+        $('.end-top-text').innerHTML = /* HTML */ `
+            <span class="end-${status}">${statusText}!</span> Ты заработал
+            <span class="end-bold">${points}</span> очков!
+        `;
+
+        const dist = Math.round(distance * 10) / 10;
+        const time = Math.round((passedTime / 1000) * 10) / 10;
+        $('.end-bottom-text').innerHTML = /* HTML */ `
+            Ты угадал <span class="end-bold">${city.name}</span> с точностью
+            <span class="end-bold">${dist}&nbsp;км</span> за
+            <span class="end-bold">${time}&nbsp;сек</span>
+        `;
+
+        timer.style.display = 'none';
+        $('.end-wrapper').style.display = '';
     });
 });
