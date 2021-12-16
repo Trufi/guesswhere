@@ -194,7 +194,7 @@ export function getStatusText(status: Status) {
 
 export function getStatusColor(status: Status) {
     const colors: { [key in Status]: string } = {
-        1: '#00e307',
+        1: '#00a105',
         2: '#84bb00',
         3: '#ffb100',
         4: '#ff8100',

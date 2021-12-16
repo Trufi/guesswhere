@@ -16,7 +16,7 @@ import {
 } from './utils';
 import { getShareHtml } from './share';
 
-const duration = 3000;
+const duration = 5000;
 const minZoom = 16;
 const { position: realCoords, city } = getRandomPosition();
 
@@ -34,7 +34,7 @@ const popupMap = new mapgl.Map('popup-map', {
     key: '042b5b75-f847-4f2a-b695-b5f58adc9dfd',
     center: [77.23746195134629, 59.957078540749734],
     zoom: 2,
-    maxZoom: 5,
+    maxZoom: 6,
     zoomControl: false,
     lang: 'ru',
 });

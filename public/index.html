@@ -65,14 +65,6 @@
                 justify-content: center;
                 pointer-events: none;
             }
-            @keyframes cycle {
-                from {
-                    color: #474747;
-                }
-                to {
-                    color: #2fa833;
-                }
-            }
             .guess {
                 padding: 0 30px;
                 border-radius: 35px;
@@ -81,7 +73,7 @@
                 font-size: 40px;
                 line-height: 65px;
                 font-weight: 600;
-                color: #0b700f;
+                color: #03ab0a;
                 cursor: pointer;
                 box-shadow: 0 1px 3px 0 rgb(38 38 38 / 50%);
                 pointer-events: all;
@@ -104,7 +96,7 @@
                 height: 100%;
                 justify-content: center;
                 align-items: center;
-                background: rgba(82, 82, 82, 0.7);
+                background: rgba(82, 82, 82, 0.8);
                 z-index: 100;
             }
             .popup-inner {
@@ -144,6 +136,7 @@
                 justify-content: center;
                 user-select: none;
                 pointer-events: none;
+                z-index: 100;
             }
             .popup-buttons-inner {
                 box-shadow: 0 1px 3px 0 rgb(38 38 38 / 50%);
@@ -160,7 +153,6 @@
                 text-align: center;
                 font-size: 21px;
                 line-height: 50px;
-                color: #666;
                 pointer-events: all;
             }
             .popup-button:hover {
@@ -196,13 +188,10 @@
                 pointer-events: none;
             }
             .end-top-text {
-                color: #646464;
-                text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+                color: #424242;
+                text-shadow: #000 0 1px 2px;
                 font-size: 55px;
                 text-align: center;
-                pointer-events: all;
-                border-radius: 15px;
-                padding: 5px 10px;
             }
             .end-bottom {
                 position: absolute;
@@ -221,30 +210,33 @@
                 justify-content: center;
             }
             .end-bottom-text {
-                color: #646464;
-                text-shadow: rgba(0, 0, 0, 1) 0 1px 2px;
+                color: #424242;
+                text-shadow: #000 0 1px 2px;
                 font-size: 50px;
                 text-align: center;
-                pointer-events: all;
-                border-radius: 15px;
-                padding: 5px 10px;
+                margin-bottom: 15px;
             }
             .end-bottom-share {
                 pointer-events: all;
             }
             .end-bold {
                 font-weight: 700;
-                color: #474747;
+                color: #000;
             }
             @media (max-width: 650px) {
+                .end-top {
+                    top: 15px;
+                    padding: 0 20px;
+                }
                 .end-top-text {
-                    font-size: 30px;
-                    background: rgba(255, 255, 255, 0.8);
+                    font-size: 36px;
                 }
 
+                .end-bottom {
+                    padding: 0 20px;
+                }
                 .end-bottom-text {
-                    font-size: 25px;
-                    background: rgba(255, 255, 255, 0.8);
+                    font-size: 30px;
                 }
             }
 
@@ -252,7 +244,7 @@
                 display: inline-block;
                 background: #fff;
                 font-weight: 700;
-                color: #666;
+                color: #424242;
                 box-shadow: 0 1px 3px 0 rgb(38 38 38 / 50%);
                 cursor: pointer;
                 user-select: none;
@@ -480,7 +472,6 @@
                 dataLayer.push(arguments);
             }
             gtag('js', new Date());
-
             gtag('config', 'G-ZS1KBFEPY8');
         </script>
     </body>
