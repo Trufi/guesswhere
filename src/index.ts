@@ -46,13 +46,11 @@ const labelStyle = {
     haloColor: '#fff',
 };
 
-const k = 3;
-
 const realMarker = new mapgl.Marker(map, {
     coordinates: realCoords,
     icon: './marker.svg',
-    size: [30 * k, 45 * k],
-    anchor: [30 * k * 0.5, 45 * k],
+    size: [30, 45],
+    anchor: [15, 45],
     zIndex: 5,
     label: {
         ...labelStyle,
