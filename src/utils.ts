@@ -159,8 +159,8 @@ export function calcPoints(distance: number, seconds: number) {
     const badDistance = 3500;
     const badTime = 300;
 
-    const distanceModifier = 1 - clamp(distance, 1, badDistance) / badDistance;
-    const timeModifier = 1 - clamp(seconds, 20, badTime) / badTime;
+    const distanceModifier = 1 - clamp(distance, 0, badDistance) / badDistance;
+    const timeModifier = 1 - clamp(seconds, 0, badTime) / badTime;
 
     const maxPoints = 1000;
     return Math.round(maxPoints * distanceModifier * timeModifier);

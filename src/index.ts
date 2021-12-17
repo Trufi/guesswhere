@@ -194,7 +194,10 @@ $('.popup-accept').addEventListener('click', () => {
             city.name
         } на карте с точностью ${dist} км и заработал ${points} ${pointsPlural(points)}!`;
 
-        $('.end-restart').addEventListener('click', () => window.location.reload());
+        $('.end-restart').addEventListener('click', () => {
+            gtag('event', 'restart', {});
+            window.location.reload();
+        });
 
         if (isMobileView && navigator.share) {
             const shareButton = $('.end-share-button');
@@ -206,6 +209,7 @@ $('.popup-accept').addEventListener('click', () => {
                         text: shareText,
                         url: 'https://trufi.github.io/guesswhere/',
                     });
+                    gtag('event', 'share', {});
                 }
             });
         } else {
@@ -219,5 +223,7 @@ $('.popup-accept').addEventListener('click', () => {
             const bottomHeight = $('.end').clientHeight;
             map.setControlsLayoutPadding({ bottom: bottomHeight });
         }
+
+        gtag('event', 'post_score', { score: points, city: city.name, distance: dist, time });
     });
 });
