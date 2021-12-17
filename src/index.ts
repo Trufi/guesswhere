@@ -27,6 +27,8 @@ const map = new mapgl.Map('map', {
     minZoom,
     zoomControl: false,
     lang: 'ru',
+    disablePitchByUserInteraction: true,
+    disableRotationByUserInteraction: true,
 });
 window.addEventListener('resize', () => map.invalidateSize());
 
@@ -37,6 +39,8 @@ const popupMap = new mapgl.Map('popup-map', {
     maxZoom: 6,
     zoomControl: false,
     lang: 'ru',
+    disablePitchByUserInteraction: true,
+    disableRotationByUserInteraction: true,
 });
 
 const labelStyle = {
